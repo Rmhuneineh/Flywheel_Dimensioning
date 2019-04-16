@@ -138,7 +138,7 @@ zeta = deltaL_t/imep/Vd; % [-] dynamic irregularity
 
 %% Flywheel
 J = zeta*imep*Vd/delta/omega^2; % [kg.m^2] moment of inertia
-J_eng = ERM*ic*Vd*c_r^2; % [Kg.m^2] engine moment of inertia
+J_eng = ERM*Vd*c_r^2; % [Kg.m^2] engine moment of inertia
 J_fly = J - J_eng; % [Kg.m^2] flywheel moment of inertia
 D = (J_fly*320/pi/Gamma_v)^(1/5); % [m] flywheel diameter
 
@@ -161,10 +161,10 @@ grid on
 
 omega_i = sqrt(omega^2 + 2/J*(Ls-Lr));
 shift = mean(omega_i) - omega;
-omega_i = omega_i - shift;
+omega_ii = omega_i - shift;
 
 figure(6)
-plot(theta, omega_i)
+plot(theta, omega_i, theta, omega_ii, [0 720], [omega omega], '--', [0 720], [mean(omega_i) mean(omega_i)], '--')
 title('Shaft Angular Speed vs Crank Angle')
 xlabel('\theta [deg]')
 ylabel('\omega_s [rad/s]')
@@ -278,10 +278,11 @@ grid on
 
 omega_i_eng = sqrt(omega^2 + 2/J*(Ls_eng-Lr_eng));
 shift_eng = mean(omega_i_eng) - omega;
-omega_i_eng = omega_i_eng - shift_eng;
+omega_ii_eng = omega_i_eng - shift_eng;
 
 figure(9)
-plot(theta(1:121), omega_i_eng(1:121))
+plot(theta(1:121), omega_i_eng(1:121), theta(1:121), omega_ii_eng(1:121), ...
+    [0 120], [omega omega], '--', [0 120], [mean(omega_i_eng) mean(omega_i_eng)], '--')
 title('Shaft Angular Speed vs Crank Angle')
 xlabel('\theta [deg]')
 ylabel('\omega_s [rad/s]')
